@@ -1,0 +1,13 @@
+#standardSQL
+SELECT COUNT(*) AS Number_of_Patents
+   FROM `patents-public-data.patents.publications`
+      WHERE
+      country_code = "US"
+      AND
+      filing_date > 20171001
+      AND
+      filing_date < 20180930
+      AND
+      grant_date > 0
+
+ORDER BY Number_of_Patents DESC;
