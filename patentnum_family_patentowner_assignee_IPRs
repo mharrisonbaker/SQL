@@ -1,0 +1,12 @@
+ SELECT PUBLIC.publication_number AS Patent,
+  PUBLIC.family_id AS Family,
+  ptab.PatentOwnerName AS PatentOwner,
+  ptab.PetitionerPartyName AS Petitioner,
+  ptab.TrialNumber AS Trial,
+  ptab.ProsecutionStatus AS Status
+  FROM `patents-public-data.uspto_ptab.trials` AS ptab
+    JOIN `patents-public-data.uspto_ptab.match` AS ptab_match
+       ON ptab.ApplicationNumber = ptab_match.ApplicationNumber
+    JOIN `patents-public-data.patents.publications` AS PUBLIC
+       ON  ptab_match.application_number = PUBLIC.application_number
+       WHERE TrialNumber LIKE 'IPR%'
