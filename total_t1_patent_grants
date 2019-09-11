@@ -1,0 +1,25 @@
+#standardSQL
+-- NotNULLAbstracts_PerCountry
+SELECT publication_number, application_number, country_code, application_number_formatted, publication_date, filing_date, grant_date
+FROM 
+  `patents-public-data.patents.publications` 
+  
+
+
+  JOIN `T1_IPR.Track1_App_Date`
+ON
+    application_number_formatted = Track1_app
+
+
+     WHERE
+      Country_Code = "US"
+      AND
+      filing_date > 20111017
+      AND
+      filing_date < 20180806
+      AND
+      grant_date > 0
+    
+
+ORDER BY
+  grant_date
