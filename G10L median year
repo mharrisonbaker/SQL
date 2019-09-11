@@ -1,0 +1,19 @@
+SELECT
+  cpc4,
+  APPROX_QUANTILES(priority_yr,
+    4)[offset(2)] AS median_priority_yr
+FROM (
+  SELECT
+    DISTINCT family_id,
+    FLOOR(priority_date / 10000) AS priority_yr,
+    SUBSTR(cpc.code, 1, 4) cpc4 # Trim CPC Code to first 4 digits.
+  FROM
+    `patents-public-data.patents.publications`,
+    UNNEST(cpc) AS cpc
+  WHERE
+    country_code = 'US'
+    AND FLOOR(priority_date / 10000) > 1995
+    AND SUBSTR(cpc.code, 1,4) IN ('G10L')
+    )
+GROUP BY
+  1
