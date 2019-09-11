@@ -1,0 +1,24 @@
+SELECT DISTINCT
+*
+FROM 
+(SELECT application_number_formatted, publication_date,  pct_number, family_id, inventor.name, inventor.country_code, citation.publication_number AS cit_publication_number, citation.application_number AS cit_application_number, citation.npl_text, citation.type, citation.category, citation.filing_date, priority.publication_number AS priority_publication_number, priority.application_number AS priority_application_number
+FROM `patents-public-data.patents.publications`, UNNEST(citation) AS citation, UNNEST(inventor_harmonized) AS inventor, UNNEST(priority_claim) AS priority
+WHERE citation.publication_number LIKE "CN%") T1
+
+INNER JOIN 
+
+(SELECT USappnum4, iprnum4, patentnum4 FROM `IPR_Tables_2.IPR_googlepatents_08062018`) T2
+
+ON
+T2.USappnum4=T1.application_number_formatted
+
+WHERE application_number_formatted = "US11517982" OR
+application_number_formatted = "US13372426" OR
+application_number_formatted = "US12972088" OR
+application_number_formatted = "US13028139" OR
+application_number_formatted = "US13474504" OR
+application_number_formatted = "US11572822" OR
+application_number_formatted = "US11588412 " OR
+application_number_formatted = "US12032995" OR
+application_number_formatted = "US12777809" OR
+application_number_formatted = "US13236742"
