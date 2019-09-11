@@ -1,0 +1,11 @@
+WITH selection AS (
+
+SELECT DISTINCT ipr_PublicationNumber, grant_date as gd, cpc_code, substr(cast(grant_date as string), 0, 4) as grant_year FROM `IPR_TABLES.temp1` 
+ )
+SELECT * FROM
+selection s
+INNER JOIN (SELECT * FROM `patents-public-data.patents.publications` as p,
+ UNNEST(p.cpc) AS x 
+  where x.first = true) n
+ON
+s.cpc_code = n.code
