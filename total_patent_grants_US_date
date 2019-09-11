@@ -1,0 +1,23 @@
+#standardSQL
+-- NotNULLAbstracts_PerCountry
+SELECT COUNT(*) AS Number_of_Patents, country_code AS Country_Code
+FROM (
+   SELECT ANY_VALUE(country_code) AS Country_Code
+   FROM `patents-public-data.patents.publications` AS patentsdb,
+   UNNEST(abstract_localized) AS abstract_info
+   WHERE
+      abstract_info.text IS NOT NULL
+      AND
+      abstract_info.language = 'en'
+      AND
+      CHARACTER_LENGTH(abstract_info.text) > 10
+      AND
+      Country_Code = "US"
+      AND
+      grant_date > 20111017
+      AND
+      grant_date < 20180806
+   GROUP BY application_number
+)
+GROUP BY Country_Code
+ORDER BY Number_of_Patents DESC;
