@@ -1,0 +1,6 @@
+#standardSQL
+SELECT FLOOR(publication_date / 10000), country_code, COUNT(*) AS cnt 
+FROM `patents-public-data.patents.publications` 
+GROUP BY 1, country_code 
+ORDER BY 1 DESC, country_code DESC 
+LIMIT 100;
