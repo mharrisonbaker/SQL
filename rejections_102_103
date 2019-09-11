@@ -1,0 +1,7 @@
+SELECT 
+  app_id, action_type, action_subtype, claim_numbers
+FROM
+   [IPR_JPO_WIPO_POSFWD.rejections_oce] 
+WHERE 
+  action_type LIKE "102" 
+  OR action_type LIKE "103" 
