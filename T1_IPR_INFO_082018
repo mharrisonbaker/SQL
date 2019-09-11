@@ -1,0 +1,6 @@
+SELECT *
+FROM `T1_IPR.IPR_Patent_dates_status_TC`
+  JOIN `IPR_Tables_2.IPRnums_patent_app_USapp`
+    ON IPR_case11 = iprnum4
+  JOIN `T1_IPR.T1` 
+  ON appnum4 = app_t1
