@@ -1,0 +1,13 @@
+SELECT 
+*
+FROM 
+(SELECT application_number_formatted, publication_date,  citation.publication_number, citation.application_number, citation.npl_text, citation.type, citation.category, citation.filing_date
+FROM `patents-public-data.patents.publications`, UNNEST(citation) AS citation
+WHERE citation.publication_number LIKE 'KR%') T1
+
+INNER JOIN 
+
+(SELECT concat('US', CAST(GD_150_app as STRING)) FROM `GD.KR150` as GD_150_USapp) T2
+
+ON
+T2.GD_150_USapp=T1.application_number_formatted
