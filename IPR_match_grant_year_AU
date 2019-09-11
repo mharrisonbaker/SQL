@@ -1,0 +1,8 @@
+SELECT DISTINCT t1.publication_number, t1.application_number, t1.application_number_formatted, t1.pct_number, t1.family_id, t1.publication_date, t1.art_unit
+FROM `patents-public-data.patents.publications` t1
+JOIN `IPR_Tables_2.PCT_DUMMY` t2
+ON
+t2.ART_UNIT=T1.art_unit
+AND CAST(t2.PUB_DATE AS STRING) = REGEXP_EXTRACT(CAST(t1.publication_date AS STRING), "^[0-9]{4}")
+WHERE t1.pct_number LIKE 'PCT%' 
+LIMIT 20
